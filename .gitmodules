@@ -1,0 +1,6 @@
+[submodule "images/bootstrap"]
+	path = images/bootstrap
+	url = git://github.com/twitter/bootstrap.git
+[submodule "images/less"]
+	path = images/less
+	url = git://github.com/cloudhead/less.js.git

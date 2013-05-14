@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<!-- Designed by Dan Fuhry in Rochester. (lol) -->
+	<!-- :mode=html: (to make jEdit happy) -->
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<title>CSH: WebAuth Login</title>
+		<link rel="stylesheet" type="text/css" href="/images/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="/images/bootstrap/css/bootstrap-responsive.min.css" />
+		<link rel="stylesheet" type="text/css" href="/images/webauth.css" />
+		
+		<script type="text/javascript" src="/images/jquery.js"></script>
+		<script type="text/javascript" src="/images/bootstrap/js/bootstrap.min.js"></script>
+	</head>
+	
+	 [% IF notdefined %]
+		<!--
+		This is the template for the WebAuth confirm page.  This page is called
+		from login.fcgi script on the weblogin server after successful
+		authentication and provides a link to continue to the appropriate web
+		page, as well as (optionally) a way to set preferences for doing
+		REMOTE_USER authentication.  Variables used:
+		
+		username               : the authenticated identity of the user
+		return_url             : the WebAuth-protected page now authenticated for
+		pretty_return_url      : same, but cleaned up for use as link text
+		login_cancel           : a cancel URL was specified
+		cancel_url             : the specified cancel URL
+		show_remuser           : show REMOTE_USER login preferences
+		remuser                : set if REMOTE_USER is desired
+		warn_expire            : show warning for upcoming password expiration
+		expire_date            : the date and time of password expiration
+		expire_time_left       : the amount of time left until password expiration
+		pwchange_url           : URL for the password change form
+		-->
+	[% END %]
+	
+	<body>
+		<div class="form-wrapper">
+			<div class="csh-logo">
+				<img alt="Computer Science House" src="/images/csh-logo.png" />
+			</div>
+			
+			<a class="btn btn-inverse btn-huge" href="[% return_url FILTER html %]">Continue</a>
+			
+		</div>
+	</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<!-- Designed by Dan Fuhry in Rochester. (lol) -->
+	<!-- :mode=html: (to make jEdit happy) -->
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<title>CSH: WebAuth Login</title>
+		<link rel="stylesheet" type="text/css" href="/images/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="/images/bootstrap/css/bootstrap-responsive.min.css" />
+		<link rel="stylesheet" type="text/css" href="/images/webauth.css" />
+		
+		<script type="text/javascript" src="/images/jquery.js"></script>
+		<script type="text/javascript" src="/images/bootstrap/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="form-wrapper">
+			<div class="csh-logo">
+				<img alt="Computer Science House" src="/images/csh-logo.png" />
+			</div>
+			
+			<form name="login" action="[% script_name FILTER html %]" method="post" enctype="application/x-www-form-urlencoded">
+			
+				<input type="hidden" name="RT" value="[% RT FILTER html %]" />
+				<input type="hidden" name="ST" value="[% ST FILTER html %]" />
+				<input type="hidden" name="LC" value="[% LC FILTER html %]" />
+				<input type="hidden" name="login" value="yes" />
+			
+				<div class="control-group csh-username">
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on">
+								<i class="icon icon-white icon-user"></i>
+							</span>
+							<input type="text" class="input-medium" name="username" placeholder="Username" value="[% username FILTER html %]" />
+						</div>
+					</div>
+				</div>
+				
+				<div class="control-group csh-password">
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on">
+								<i class="icon icon-white icon-lock"></i>
+							</span>
+							<input type="password" class="input-medium" name="password" placeholder="Password" />
+						</div>
+					</div>
+				</div>
+				
+				<div class="control-group csh-submit">
+					<button class="btn btn-inverse btn-mini">
+						Log in
+					</button>
+					
+					&nbsp;
+					
+					<a class="btn btn-warning btn-mini" href="/CA.crt">
+						<i class="icon icon-white icon-certificate"></i>
+						Download certificate
+					</a>
+					
+					[% IF login_cancel %]
+						&nbsp;
+						<a class="btn btn-mini" href="[% cancel_url FILTER html %]">Cancel</a>
+					[% END %]
+				</div>
+				
+				[% IF error %]
+					<div class="alert alert-error">
+						<a href="#" class="close" data-dismiss="alert">&times;</a>
+						
+						[% IF err_missinginput %]
+						<!-- This is just the combination of err_username and
+							err_password if you want only one error message.  We
+							don't use it. -->
+						[% END %]
+						
+						[% IF err_username && err_password %]
+							<!-- Error: no username or password submitted. -->
+							Error: Enter your username and password.
+						[% ELSIF err_username %]
+							<!-- Error: no username submitted. -->
+							Error: Enter your username.
+						[% ELSIF err_password %]
+							<!-- Error: no password submitted. -->
+							Error: Enter your password.
+						[% END %]
+						
+						[% IF err_loginfailed %]
+							<!-- Error: login failed. -->
+							Error: You entered an incorrect username or password (or both).
+						[% END %]
+						
+						[% IF err_rejected %]
+							<!-- Error: user principal rejected. -->
+							Error: That username may not authenticate to this service.
+						[% END %]
+						
+						[% IF err_forced %]
+							<!-- Not really an error, forced login. -->
+							This web site requires that you log in with username and
+							password.
+						[% END %]
+					</div>
+				[% END %]
+				[% IF remuser_failed %]
+					<div class="alert alert-error">
+						<a href="#" class="close" data-dismiss="alert">&times;</a>
+						Error: Apache authentication was tried and failed.
+					</div>
+				[% END %]
+			</form>
+		</div>
+	</body>
+</html>
